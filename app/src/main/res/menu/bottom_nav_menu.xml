@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Home/Overview Tab -->
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <!-- Calendar Tab -->
+    <item
+        android:id="@+id/navigation_calendar"
+        android:icon="@drawable/ic_calendar_black_24dp"
+        android:title="@string/title_calendar" />
+
+    <!-- Tasks/To-Do List Tab -->
+    <item
+        android:id="@+id/navigation_tasks"
+        android:icon="@drawable/ic_tasks_black_24dp"
+        android:title="@string/title_tasks" />
+
+    <!-- Notifications Tab -->
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_notifications" />
+
+</menu>

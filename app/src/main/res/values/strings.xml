@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PlanMate</string>
+    <string name="title_home">Home</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_tasks">Tasks</string>
+    <string name="title_notifications">Notifications</string>
+</resources>

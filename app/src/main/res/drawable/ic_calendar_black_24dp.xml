@@ -1,0 +1,37 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Rounded Rectangle for Calendar Body -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M4,4h16v16H4zM3,5a1,1 0,0 1,1 -1h16a1,1 0,0 1,1 1v16a1,1 0,0 1,-1 1h-16a1,1 0,0 1,-1 -1z" />
+
+    <!-- Top Header Line -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M4,7h16v2H4z" />
+
+    <!-- Calendar Clips at Top -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M6,2h2v3H6zM16,2h2v3h-2z" />
+
+    <!-- Date Squares -->
+    <!-- Top row of date squares -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5.5,10.5h2.5v2.5H5.5zM9,10.5h2.5v2.5H9zM12.5,10.5h2.5v2.5h-2.5zM16,10.5h2.5v2.5H16z" />
+
+    <!-- Middle row of date squares -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5.5,14h2.5v2.5H5.5zM9,14h2.5v2.5H9zM12.5,14h2.5v2.5h-2.5zM16,14h2.5v2.5H16z" />
+
+    <!-- Bottom row of date squares -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5.5,17.5h2.5v2.5H5.5zM9,17.5h2.5v2.5H9zM12.5,17.5h2.5v2.5h-2.5z" />
+</vector>
