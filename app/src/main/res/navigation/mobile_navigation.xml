@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/navigation_tasks"
         android:name="com.example.planmate.user.ui.event.EventFragment"
-        android:label="@string/title_tasks"
+        android:label="@string/title_events"
         tools:layout="@layout/fragment_event" />
 
     <!-- Notifications Fragment -->
@@ -32,4 +32,10 @@
         android:name="com.example.planmate.user.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.planmate.user.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

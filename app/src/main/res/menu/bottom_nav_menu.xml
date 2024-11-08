@@ -16,8 +16,8 @@
     <!-- Tasks/To-Do List Tab -->
     <item
         android:id="@+id/navigation_tasks"
-        android:icon="@drawable/ic_tasks_black_24dp"
-        android:title="@string/title_tasks" />
+        android:icon="@drawable/ic_events_black_24dp"
+        android:title="@string/title_events" />
 
     <!-- Notifications Tab -->
     <item
