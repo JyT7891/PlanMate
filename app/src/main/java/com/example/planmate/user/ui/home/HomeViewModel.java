@@ -1,5 +1,7 @@
 package com.example.planmate.user.ui.home;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,7 +14,7 @@ import java.util.List;
 public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<List<Task>> taskList;
-    private final MutableLiveData<List<Event>> upcomingEvents; // New LiveData for upcoming events
+    private final MutableLiveData<List<Event>> upcomingEvents; // LiveData for upcoming events
 
     public HomeViewModel() {
         taskList = new MutableLiveData<>(new ArrayList<>());  // Initialize with an empty list
@@ -26,7 +28,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public LiveData<List<Event>> getUpcomingEvents() {
-        return upcomingEvents;
+        return upcomingEvents; // Return the LiveData for observers
     }
 
     // Load sample tasks (replace this with actual data fetching logic)
@@ -40,11 +42,10 @@ public class HomeViewModel extends ViewModel {
 
     // Load sample events (replace this with actual data fetching logic)
     private void loadSampleEvents() {
-        // Create a sample list of events
         List<Event> sampleEvents = new ArrayList<>();
         sampleEvents.add(new Event("1", "Tech Conference", "2024-11-15", "10:00 AM", "Location A", "A conference about tech innovations.", new ArrayList<>()));
         sampleEvents.add(new Event("2", "Networking Event", "2024-11-20", "5:00 PM", "Location B", "An opportunity to connect with industry professionals.", new ArrayList<>()));
-        upcomingEvents.setValue(sampleEvents);
+        upcomingEvents.setValue(sampleEvents); // Set the sample events
     }
 
     // Method to add a new task
@@ -53,6 +54,20 @@ public class HomeViewModel extends ViewModel {
         if (currentTasks != null) {
             currentTasks.add(task);
             taskList.setValue(currentTasks);  // Update LiveData with the new list
+        }
+    }
+
+    // Method to fetch events from Firestore or other data sources
+    public void fetchUpcomingEvents() {
+        // Simulate fetching data (replace this logic with your actual data fetching)
+        try {
+            // Example logic to fetch events from Firestore (replace this with actual fetching logic)
+            List<Event> fetchedEvents = new ArrayList<>();
+            // Assume you fetch data and add it to fetchedEvents list
+            upcomingEvents.setValue(fetchedEvents);
+        } catch (Exception e) {
+            Log.e("HomeViewModel", "Error fetching events", e);
+            upcomingEvents.setValue(new ArrayList<>()); // Set to an empty list on error
         }
     }
 }

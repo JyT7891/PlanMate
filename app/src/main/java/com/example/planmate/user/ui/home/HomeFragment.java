@@ -9,15 +9,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 import com.example.planmate.databinding.FragmentHomeBinding;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private RecyclerView eventsRecyclerView;
-    private EventAdapter eventAdapter; // Create an adapter for upcoming events
+    private EventAdapter eventAdapter;
     private HomeViewModel homeViewModel;
+    private SearchView searchView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -27,14 +30,29 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         // Initialize RecyclerView for events
-        eventsRecyclerView = binding.recyclerViewEvents; // Assuming you have this in your layout
+        eventsRecyclerView = binding.recyclerViewEvents;
         eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        eventAdapter = new EventAdapter(new ArrayList<>()); // Adapter for displaying events
+        eventAdapter = new EventAdapter(new ArrayList<>());
         eventsRecyclerView.setAdapter(eventAdapter);
+
+        // Set up SearchView
+        searchView = binding.searchView;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false; // You can implement further actions here if needed
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                eventAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
 
         // Observe upcoming events from ViewModel and update RecyclerView when data changes
         homeViewModel.getUpcomingEvents().observe(getViewLifecycleOwner(), events -> {
-            eventAdapter.setEventList(events); // Update adapter data
+            eventAdapter.setEventList(events);
             eventAdapter.notifyDataSetChanged();
         });
 

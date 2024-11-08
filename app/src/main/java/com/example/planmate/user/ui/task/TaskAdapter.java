@@ -34,7 +34,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
-        holder.title.setText(task.getTitle());
+        holder.title.setText(task.getTitle());  // You may want to use a different method to extract title from Task
         holder.date.setText(task.getDate());
         holder.time.setText(task.getTime());
     }
@@ -49,9 +49,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.task_title);
-            date = itemView.findViewById(R.id.task_date);
-            time = itemView.findViewById(R.id.task_time);
+            // Update these IDs to match the event layout
+            title = itemView.findViewById(R.id.event_name);  // Use event_name
+            date = itemView.findViewById(R.id.event_date);    // Use event_date
+            time = itemView.findViewById(R.id.event_time);    // Use event_time
         }
     }
 }
