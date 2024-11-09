@@ -35,6 +35,22 @@
             android:exported="true"
             android:label="Home" />
 
+        <activity android:name=".eventOrganizer.ui.OrganizerActivity"
+            android:exported="true"
+            android:label="EventOrganizerHome" />
+
+        <activity android:name=".eventOrganizer.ui.createEvent.CreateEventActivity"/>
+
+        <activity android:name=".eventOrganizer.ui.rsvp.SelectAttendeesActivity" />
+
+        <activity android:name=".eventOrganizer.ui.rsvp.ManageAttendeesActivity" />
+
+        <activity android:name=".admin.ui.AdminActivity"
+            android:exported="true"
+            android:label="AdminHome" />
+
+
+
     </application>
 
 </manifest>

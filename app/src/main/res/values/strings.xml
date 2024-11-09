@@ -4,4 +4,15 @@
     <string name="title_calendar">Calendar</string>
     <string name="title_events">Events</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_create_event">Create Event</string>
+    <string name="title_manage_rsvps">Manage RSVPs</string>
+    <string name="title_admin_dashboard">Admin Dashboard</string>
+    <string name="title_user_management">User Management</string>
+    <string name="title_event_management">Event Management</string>
+    <string name="title_reports">Reports</string>
+    <string name="organizer_dashboard_title">Organizer Dashboard</string>
+    <string name="create_event_description">Create New Event</string>
+
+
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/organizer_navigation"
+    app:startDestination="@id/navigation_dashboard">
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.planmate.eventOrganizer.ui.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_create_event"
+        android:name="com.example.planmate.eventOrganizer.ui.createEvent.CreateEventFragment"
+        android:label="Create Event"
+        tools:layout="@layout/fragment_create_event" />
+
+    <fragment
+        android:id="@+id/navigation_manage_rsvps"
+        android:name="com.example.planmate.eventOrganizer.ui.rsvp.ManageRSVPFragment"
+        android:label="Manage RSVPs"
+        tools:layout="@layout/fragment_manage_rsvp" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.planmate.user.ui.notifications.NotificationsFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+</navigation>

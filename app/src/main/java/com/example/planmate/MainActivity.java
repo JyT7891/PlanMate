@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.planmate.admin.ui.AdminActivity;
+import com.example.planmate.eventOrganizer.ui.OrganizerActivity;
 import com.example.planmate.user.ui.home.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -133,16 +135,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void navigateToHome(String userType) {
+        Intent intent;
+
         if ("admin".equals(userType)) {
             Toast.makeText(MainActivity.this, "Admin login successful", Toast.LENGTH_SHORT).show();
+            // Navigate to the admin-specific activity (e.g., AdminActivity)
+            intent = new Intent(MainActivity.this, AdminActivity.class);
+        } else if ("eventOrganizer".equals(userType)) {
+            Toast.makeText(MainActivity.this, "Event Organizer login successful", Toast.LENGTH_SHORT).show();
+            // Navigate to OrganizerActivity for event organizers
+            intent = new Intent(MainActivity.this, OrganizerActivity.class);
         } else {
             Toast.makeText(MainActivity.this, "User login successful", Toast.LENGTH_SHORT).show();
+            // Navigate to the default user HomeActivity
+            intent = new Intent(MainActivity.this, HomeActivity.class);
         }
 
-        // Start HomeActivity
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        // Start the appropriate activity based on userType
         startActivity(intent);
         finish(); // Close MainActivity
     }
+
 
 }

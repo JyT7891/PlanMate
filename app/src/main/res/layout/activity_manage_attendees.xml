@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RSVP Summary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/acceptedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accepted: 0" />
+
+    <TextView
+        android:id="@+id/declinedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Declined: 0" />
+
+    <TextView
+        android:id="@+id/pendingCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pending: 0"
+        android:layout_marginBottom="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/attendeesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/addAttendeesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add More People" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_gravity="start"
+        android:layout_marginBottom="16dp" />
+</LinearLayout>

@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp"
+    android:background="@android:color/white"
+    android:elevation="4dp">
+
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/rsvpSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RSVPs: 0 Accepted, 0 Declined, 0 Pending"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+</LinearLayout>
