@@ -5,14 +5,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class EventViewModel extends ViewModel {
-    private final MutableLiveData<String> mText;
+
+    private final MutableLiveData<String> eventDetails;
 
     public EventViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is event fragment");
+        eventDetails = new MutableLiveData<>();
+        eventDetails.setValue("This is the Event fragment");
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getEventDetails() {
+        return eventDetails;
     }
 }

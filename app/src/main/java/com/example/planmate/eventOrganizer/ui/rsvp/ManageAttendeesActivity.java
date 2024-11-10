@@ -19,8 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ManageAttendeesActivity extends AppCompatActivity {
@@ -31,6 +33,9 @@ public class ManageAttendeesActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String eventId;
     private String eventName;
+    private AttendeesAdapter adapter;
+    private List<Map<String, String>> attendeesList;
+    private Set<String> addedUserIds;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +63,11 @@ public class ManageAttendeesActivity extends AppCompatActivity {
         addAttendeesButton = findViewById(R.id.addAttendeesButton);
         backButton = findViewById(R.id.backButton);
 
+        attendeesList = new ArrayList<>();
+        addedUserIds = new HashSet<>();
+        adapter = new AttendeesAdapter(attendeesList);
         attendeesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        attendeesRecyclerView.setAdapter(adapter);
 
         // Load RSVP summary and attendees list
         loadRSVPSummary();
@@ -78,6 +87,14 @@ public class ManageAttendeesActivity extends AppCompatActivity {
             startActivity(intent);
             finish(); // Close current activity
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data on resume to get the latest attendee list and RSVP summary
+        loadRSVPSummary();
+        loadAttendees();
     }
 
     private void loadRSVPSummary() {
@@ -106,11 +123,9 @@ public class ManageAttendeesActivity extends AppCompatActivity {
                                         }
                                     }
                                     // Update the TextViews with labels and counts
-                                    runOnUiThread(() -> {
-                                        acceptedCount.setText("Accepted: " + accepted.get());
-                                        declinedCount.setText("Declined: " + declined.get());
-                                        pendingCount.setText("Pending: " + pending.get());
-                                    });
+                                    acceptedCount.setText("Accepted: " + accepted.get());
+                                    declinedCount.setText("Declined: " + declined.get());
+                                    pendingCount.setText("Pending: " + pending.get());
                                 });
                     }
                 })
@@ -118,14 +133,15 @@ public class ManageAttendeesActivity extends AppCompatActivity {
     }
 
     private void loadAttendees() {
-        List<Map<String, String>> attendeesList = new ArrayList<>();
+        attendeesList.clear();
+        addedUserIds.clear(); // Clear the set to ensure no duplicates on reload
 
         db.collection("users")
                 .get()
                 .addOnSuccessListener(usersSnapshot -> {
                     for (DocumentSnapshot userDoc : usersSnapshot) {
-                        // Retrieve the username from the parent user document
                         String userName = userDoc.getString("username");
+                        String userId = userDoc.getId();
 
                         // Access the user's user_events sub-collection
                         userDoc.getReference().collection("user_events")
@@ -133,19 +149,18 @@ public class ManageAttendeesActivity extends AppCompatActivity {
                                 .get()
                                 .addOnSuccessListener(userEventsSnapshot -> {
                                     for (DocumentSnapshot doc : userEventsSnapshot) {
-                                        // Retrieve the status field from the user_events document
                                         String status = doc.getString("status");
 
-                                        // Use the username from the parent user document and status from user_events
-                                        Map<String, String> attendee = new HashMap<>();
-                                        attendee.put("userName", userName != null ? userName : "Unknown User");
-                                        attendee.put("status", status != null ? status : "Pending");
-
-                                        attendeesList.add(attendee);
+                                        // Only add unique user entries
+                                        if (addedUserIds.add(userId)) { // add() returns false if already present
+                                            Map<String, String> attendee = new HashMap<>();
+                                            attendee.put("userName", userName != null ? userName : "Unknown User");
+                                            attendee.put("status", status != null ? status : "Pending");
+                                            attendeesList.add(attendee);
+                                        }
                                     }
-                                    // Set the adapter with the attendees list
-                                    AttendeesAdapter adapter = new AttendeesAdapter(attendeesList);
-                                    attendeesRecyclerView.setAdapter(adapter);
+                                    // Notify adapter of the changes after the data is completely loaded
+                                    adapter.notifyDataSetChanged();
                                 })
                                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to load user events", Toast.LENGTH_SHORT).show());
                     }

@@ -1,19 +1,21 @@
 package com.example.planmate.user.ui.notifications;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import java.util.List;
 
 public class NotificationsViewModel extends ViewModel {
-
-    private final MutableLiveData<String> mText;
+    private NotificationService notificationService;
+    private LiveData<List<NotificationItem>> notifications;
 
     public NotificationsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        notificationService = new NotificationService();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<NotificationItem>> getNotifications(String userId) {
+        if (notifications == null) {
+            notifications = notificationService.getNotifications(userId);
+        }
+        return notifications;
     }
 }

@@ -10,23 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.planmate.databinding.FragmentNotificationsBinding;
-import com.example.planmate.user.ui.notifications.NotificationsViewModel;
+import com.example.planmate.databinding.FragmentEventBinding;
 
 public class EventFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentEventBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        EventViewModel eventViewModel =
+                new ViewModelProvider(this).get(EventViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentEventBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textEventDetails;
+        eventViewModel.getEventDetails().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

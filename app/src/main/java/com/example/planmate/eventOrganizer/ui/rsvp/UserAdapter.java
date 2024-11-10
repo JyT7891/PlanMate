@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    private final List<Map<String, String>> users;
+    private List<Map<String, String>> users;
     private final List<String> selectedUserIds;
 
     public UserAdapter(List<Map<String, String>> users, List<String> selectedUserIds) {
@@ -67,5 +67,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             textViewUserName = itemView.findViewById(R.id.textViewUserName);
             checkBox = itemView.findViewById(R.id.checkBox);
         }
+    }
+
+    // Update the users list and notify adapter of data change
+    public void updateList(List<Map<String, String>> filteredList) {
+        this.users = filteredList;
+        notifyDataSetChanged();
     }
 }
