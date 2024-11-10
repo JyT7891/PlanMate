@@ -5,63 +5,54 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-import com.example.planmate.databinding.FragmentHomeBinding;
+import com.example.planmate.R;
+import com.example.planmate.eventOrganizer.ui.createEvent.Event;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
-    private RecyclerView eventsRecyclerView;
+    private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
-    private HomeViewModel homeViewModel;
-    private SearchView searchView;
+    private List<Event> eventList;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        recyclerView = view.findViewById(R.id.recyclerViewEvents);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Set up ViewModel
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        eventList = new ArrayList<>();
+        eventAdapter = new EventAdapter(eventList);
+        recyclerView.setAdapter(eventAdapter);
 
-        // Initialize RecyclerView for events
-        eventsRecyclerView = binding.recyclerViewEvents;
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        eventAdapter = new EventAdapter(new ArrayList<>());
-        eventsRecyclerView.setAdapter(eventAdapter);
+        loadEvents();
 
-        // Set up SearchView
-        searchView = binding.searchView;
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false; // You can implement further actions here if needed
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                eventAdapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-
-        // Observe upcoming events from ViewModel and update RecyclerView when data changes
-        homeViewModel.getUpcomingEvents().observe(getViewLifecycleOwner(), events -> {
-            eventAdapter.setEventList(events);
-            eventAdapter.notifyDataSetChanged();
-        });
-
-        return root;
+        return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private void loadEvents() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("events")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    eventList.clear();
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        Event event = document.toObject(Event.class);
+                        eventList.add(event);
+                    }
+                    eventAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> {
+                    // Handle the error, e.g., show a Toast
+                });
     }
 }
