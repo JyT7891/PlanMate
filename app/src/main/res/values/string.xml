@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Add the new string resource -->
+    <string name="month_title">November 2024</string>
+</resources>
